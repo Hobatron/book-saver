@@ -1,0 +1,29 @@
+.cardHover:hover {
+    transform: scale(1.10, 1.10);
+    z-index: 1;
+    box-shadow: 0px 10px 12px #888888;
+}
+
+.card {
+    transition: all .2s ease-in-out;
+    -webkit-transition: all .2s ease-in-out;
+    height: 400px;
+    width: 275px;
+    margin: 0px;
+}
+
+.test {
+    margin: 0px;
+}
+
+a {
+    color: black;
+}
+
+.text-align-center {
+    text-align: center;
+}
+
+.display-inline-block {
+    display: inline-block;
+}
