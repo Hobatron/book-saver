@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { MDBBtn, MDBCol, MDBCard, MDBCardBody, MDBCardGroup, MDBCardImage, MDBCardTitle, MDBCardText } from "mdbreact";
-import axios from "axios"
+import axios from "axios";
 
 import "./index.css";
 
@@ -8,37 +8,48 @@ import "./index.css";
 export class BookCard extends Component {
     state = {
         bookJSON: []
-    }
+    };
 
     componentWillReceiveProps(newBooks) {
         if (newBooks.bookDetails !== []) {
-            console.log(newBooks);
             this.setState({
                 bookJSON: newBooks.bookDetails
-            })
-        }
-    }
+            });
+        };
+    };
 
     saveButtonHandler = (e) => {
-        let bookToSave = this.state.bookJSON.filter(book => {
-            return book.id === e.target.getAttribute("data-id")
-        })
-        bookToSave = bookToSave[0]
-        const bookInfo = {
-            id: bookToSave.id,
-            volumeInfo: {
-                title: bookToSave.volumeInfo.title,
-                authors: bookToSave.volumeInfo.authors,
-                description: bookToSave.volumeInfo.description,
-                imageLinks: { thumbnail: bookToSave.volumeInfo.imageLinks.thumbnail },
-                previewLink: bookToSave.volumeInfo.previewLink,
-            }
-        }
-        axios.post("/api/add", { bookInfo })
-            .then((res) => {
-                console.log(res)
+        if (e.target.classList.contains("btn-deep-purple")) {
+            let bookToSave = this.state.bookJSON.filter(book => {
+                return book.id === e.target.getAttribute("data-id");
             })
-    }
+            bookToSave = bookToSave[0];
+            const bookInfo = {
+                id: bookToSave.id,
+                volumeInfo: {
+                    title: bookToSave.volumeInfo.title,
+                    authors: bookToSave.volumeInfo.authors,
+                    description: bookToSave.volumeInfo.description,
+                    imageLinks: { thumbnail: bookToSave.volumeInfo.imageLinks.thumbnail },
+                    previewLink: bookToSave.volumeInfo.previewLink,
+                }
+            };
+            axios.post("/api/add", { bookInfo })
+        } else {
+            let bookToDelete = e.target.getAttribute("data-id");
+            axios.delete("/api/book/" + bookToDelete)
+                .then((res) => {
+                    if (res.data.deletedCount === 1) {
+                        let updatedBooks = this.state.bookJSON.filter((books) => books.id !== bookToDelete);
+                        this.setState({
+                            bookJSON: updatedBooks
+                        });
+                    } else {
+                        console.log(`Error: ${res}`)
+                    }
+                });
+        };
+    };
 
     render() {
         return (
@@ -77,8 +88,8 @@ export class BookCard extends Component {
                     })}
                 </MDBCardGroup>
             </div>
-        )
-    }
-}
+        );
+    };
+};
 
-export default BookCard
+export default BookCard;

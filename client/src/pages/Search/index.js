@@ -1,9 +1,5 @@
-import React, {
-	Component
-} from 'react'
-import {
-	MDBContainer
-} from "mdbreact";
+import React, { Component } from 'react'
+import { MDBContainer } from "mdbreact";
 import axios from 'axios';
 import tempjson from './flowersResults.json';
 import BookCards from '../../components/BookCards'
@@ -40,16 +36,10 @@ export class Search extends Component {
 	};
 
 	render() {
-		return ( <
-			MDBContainer className = "mt-5" >
-			<
-			BookCards btnColor = 'deep-purple'
-			btnText = "Save book"
-			bookDetails = {
-				this.state.bookJSON
-			}
-			/> <
-			/MDBContainer>
+		return (
+			<MDBContainer className="mt-5">
+				<BookCards btnColor='deep-purple' btnText="Save book" bookDetails={this.state.bookJSON} />
+			</MDBContainer>
 		);
 	};
 };

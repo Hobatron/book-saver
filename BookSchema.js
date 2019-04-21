@@ -3,7 +3,8 @@ var Schema = mongoose.Schema;
 
 var BookSchema = new Schema({
   id: {
-    type: String
+    type: String,
+    unique: true
   },
   volumeInfo: {
     title: {

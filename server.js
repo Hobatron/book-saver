@@ -25,17 +25,25 @@ app.post("/api/add", (req, res) => {
 		.then((results) => {
 			res.json({
 				results
-			})
-		})
-})
+			});
+		});
+});
 
 app.get("/api/books", (req, res) => {
 	db.find().then((books) => {
 		res.json({
 			books
-		})
-	})
-})
+		});
+	});
+});
+
+app.delete("/api/book/:id", (req, res) => {
+	db.deleteOne({
+		id: req.params.id
+	}).then((result) => {
+		res.json(result);
+	});
+});
 
 // Send every other request to the React app
 // Define any API routes before this runs
