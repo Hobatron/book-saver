@@ -5,6 +5,10 @@ const app = express();
 const mongoose = require("mongoose")
 const db = require("./BookSchema")
 
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/book_db";
+
+mongoose.connect(MONGODB_URI);
+
 // Define middleware here
 app.use(express.urlencoded({
 	extended: true
@@ -14,10 +18,6 @@ app.use(express.json());
 if (process.env.NODE_ENV === "production") {
 	app.use(express.static("client/build"));
 };
-
-mongoose.connect('mongodb://localhost:27017/book_db', {
-	useNewUrlParser: true
-});
 
 // Define API routes here
 app.post("/api/add", (req, res) => {
